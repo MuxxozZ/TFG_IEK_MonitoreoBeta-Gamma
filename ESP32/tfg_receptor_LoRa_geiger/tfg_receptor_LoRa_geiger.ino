@@ -2,7 +2,7 @@
 #include "Arduino.h"
 
 // --- Configuración LoRa (Emisor y Receptor) ---
-#define RF_FREQUENCY                915000000
+#define RF_FREQUENCY                920000000
 #define LORA_BANDWIDTH              0
 #define LORA_SPREADING_FACTOR       7
 #define LORA_CODINGRATE             1
@@ -77,6 +77,6 @@ void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr) {
         Serial.println("}");
     }
 
-    Radio.Rx(0);
+    Radio.Sleep();
     lora_idle = true;
 }

@@ -3,7 +3,7 @@
 #include "DHT.h"
 
 // --- Configuración LoRa (Emisor y Receptor) ---
-#define RF_FREQUENCY                915000000
+#define RF_FREQUENCY                920000000
 #define TX_OUTPUT_POWER             5
 #define LORA_BANDWIDTH              0
 #define LORA_SPREADING_FACTOR       7
