@@ -2,7 +2,7 @@
 
 Este repositorio contiene el código fuente y la documentación del Trabajo de Fin de Grado titulado:
 
-> **"DISEÑO DE UNA RED DE SENSORES MEDIANTE IoT PARA EL MONITOREO DE RADIACIÓN BETA-GAMMA ORIENTADO AL CAMPUS DE LA UNIVERSIDAD NACIONAL DE ASUNCIÓN"**
+> **"DISEÑO DE UNA RED DE SENSORES MEDIANTE IOT PARA EL MONITOREO DE RADIACIÓN BETA-GAMMA ORIENTADO A UNIDADES ACADÉMICAS CON FUENTES DE EMISIÓN DE LA UNIVERSIDAD NACIONAL DE ASUNCIÓN"**
 
 El sistema realiza la medición, transmisión, almacenamiento y visualización de niveles de radiación ionizante Beta y Gamma, junto con la temperatura y humedad del ambiente. Utiliza un detector Geiger-Müller conectado a un nodo **ESP32 LoRa** que transmite los datos de forma inalámbrica a un nodo receptor. Este último se conecta a una **Raspberry Pi 4 Model B**, que funciona como servidor: un script de **Python** publica los datos en **MQTT**, **Node-RED** los procesa y se almacena en **InfluxDB**. Posteriormente en **Grafana** se genera y visualiza el dashboard de monitoreo.
 
@@ -75,7 +75,7 @@ flowchart LR
 | Herramienta | Función |
 | :--- | :--- |
 | **Arduino IDE / C++** | Programación del firmware de los ESP32 |
-| **LoRa (915 MHz)** | Comunicación inalámbrica entre nodos |
+| **LoRa (920 MHz)** | Comunicación inalámbrica entre nodos |
 | **Python** | Lectura del puerto serie y publicación a MQTT |
 | **MQTT (Mosquitto)** | Protocolo de mensajería entre el script y Node-RED |
 | **Node-RED** | Procesamiento de datos y escritura en la base de datos |
