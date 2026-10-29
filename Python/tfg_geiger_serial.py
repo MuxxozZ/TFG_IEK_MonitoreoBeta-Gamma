@@ -44,6 +44,10 @@ def main():
                 except json.JSONDecodeError:
                     continue
 
+                if "error" in datos:
+                    print(f"[RX-ERROR] {datos}", flush=True)
+                    continue
+                    
                 payload = json.dumps(datos)
                 client.publish(MQTT_TOPIC, payload, qos=MQTT_QOS)
                 print(f"[PUB] {payload}", flush=True)

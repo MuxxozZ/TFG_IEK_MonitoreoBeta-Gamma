@@ -30,7 +30,7 @@
         "type": "debug",
         "z": "301af8a1a3de23b9",
         "name": "debug 2",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -63,7 +63,7 @@
         "type": "function",
         "z": "301af8a1a3de23b9",
         "name": "function 2",
-        "func": "var data = msg.payload;\nif (typeof data === \"string\") { data = JSON.parse(data);}\nnode.warn(data)\nmsg.payload = [\n    {\n        nodo: data.node || 0,\n        cpm: data.cpm || 0,\n        rad: data.rad || 0,\n        temp: data.temp || 0,\n        hum: data.hum || 0,\n        contador: data.pkt || 0,\n        totalizador: data.total || 0,\n        rssi: data.rssi || 0\n    },\n    {\n        node_id: \"nodo_\" + (data.node || \"1\")\n    }\n];\n\nreturn msg;",
+        "func": "var data = msg.payload;\nif (typeof data === \"string\") { data = JSON.parse(data); }\n\n// Si llega un mensaje de error, no se guarda en la DB\nif (data.error) {\n    node.warn(\"Mensaje de error del receptor, no se guarda\");\n    return null;\n}\n\n// Si falta alguna medición, no se guarda en la DB\nif (typeof data.node !== \"number\" || typeof data.cpm !== \"number\" ||\n    typeof data.rad !== \"number\" || typeof data.temp !== \"number\" ||\n    typeof data.hum !== \"number\" || typeof data.pkt !== \"number\" ||\n    typeof data.total !== \"number\" || typeof data.rssi !== \"number\") {\n    node.warn(\"Faltan datos en el mensaje, no se guarda\");\n    return null;\n}\n\n// Si hay algún valor fuera de rango posible, no se guarda en la DB\nif (data.cpm < 0 || data.cpm > 12000 ||\n    data.temp < -40 || data.temp > 80 ||\n    data.hum < 0 || data.hum > 100) {\n    node.warn(\"Valor fuera de rango, no se guarda\");\n    return null;\n}\n\nvar campos = {\n    nodo: data.node,\n    cpm: data.cpm,\n    rad: data.rad,\n    temp: data.temp,\n    hum: data.hum,\n    contador: data.pkt,\n    totalizador: data.total,\n    rssi: data.rssi\n};\n\n// DHT22 todavía con lectura inválida, se guarda solo los demas datos\nif (data.temp === 0 && data.hum === 0) {\n    delete campos.temp;\n    delete campos.hum;\n}\n\nmsg.payload = [\n    campos,\n    {\n        node_id: \"nodo_\" + data.node\n    }\n];\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -182,7 +182,7 @@
         "sessionExpiry": ""
     },
     {
-        "id": "10f6d21bcf758072",
+        "id": "eea57e5dd64a7750",
         "type": "global-config",
         "env": [],
         "modules": {

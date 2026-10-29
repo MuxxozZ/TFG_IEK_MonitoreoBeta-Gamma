@@ -17,7 +17,7 @@ flowchart LR
         D[DHT22] --> E1
     end
 
-    E1 -.->|LoRa 915 MHz| E2
+    E1 -.->|LoRa 920 MHz| E2
 
     subgraph Nodo_Receptor["📶 Nodo Receptor"]
         E2[ESP32 Heltec<br/>LoRa V3]
@@ -92,7 +92,7 @@ $$
 \dot{H} \; [\mu Sv/h] = CPM \times 0.00812
 $$
 
-El factor **0.00812** corresponde a la calibración del tubo LND712 recomendado por el fabricante. 
+El factor **0.00812** se deriva de la sensibilidad gamma del LND712 para Co-60 indicada en su hoja de datos (18 cps por mR/h ≈ 123 CPM por µSv/h). Es una **estimación no calibrada**, válida solo de forma aproximada para radiación gamma similar a la del Co-60; la magnitud principal del sistema es **CPM**.
 
 ---
 
